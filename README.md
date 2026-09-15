@@ -1,98 +1,140 @@
 # Monte Carlo Tic-Tac-Toe using MCTS
 
+## Student Details
+
+Name: YOUR NAME
+Register Number: YOUR REGISTER NUMBER
+Course: Foundations of Artificial Intelligence
+
 ## 1. Problem Statement
 
-Develop a Tic-Tac-Toe game agent using Monte Carlo Tree Search (MCTS). The system should select the best move by performing random game simulations instead of constructing the complete game tree. The performance of MCTS is also compared with the Minimax algorithm.
+The objective of this project is to develop a Tic-Tac-Toe
+agent using Monte Carlo Tree Search (MCTS).
+
+The system uses random game simulations to decide which move
+is promising instead of constructing the complete game tree.
+
+The MCTS agent is also compared with a Minimax-based agent.
 
 ## 2. Objectives
 
-- To implement a Tic-Tac-Toe game using Python.
-- To implement Monte Carlo Tree Search.
-- To demonstrate Selection, Expansion, Simulation and Backpropagation.
-- To use random rollouts to guide the search.
-- To compare MCTS with the Minimax algorithm.
-- To develop an intelligent game-playing agent.
+- Implement Tic-Tac-Toe game logic.
+- Implement Monte Carlo Tree Search.
+- Demonstrate Selection, Expansion, Simulation and
+  Backpropagation.
+- Use random rollouts to evaluate possible moves.
+- Compare MCTS performance with Minimax.
 
-## 3. Technologies Used
+## 3. MCTS Approach
 
-- Python
-- Monte Carlo Tree Search (MCTS)
-- Minimax Algorithm
-- GitHub
+MCTS consists of four major steps:
 
-## 4. Dataset
+1. Selection
+2. Expansion
+3. Simulation
+4. Backpropagation
 
-No external dataset is required for this project. The game board and possible moves are generated dynamically during gameplay.
+### Selection
 
-## 5. Methodology
+The algorithm selects a promising node using the UCT formula.
 
-The MCTS algorithm works through four main stages:
+### Expansion
 
-1. Selection – Select the most promising node using the UCT formula.
-2. Expansion – Add an unexplored move to the search tree.
-3. Simulation – Perform random moves until the game reaches a terminal state.
-4. Backpropagation – Update the visit count and win statistics of the nodes.
+A new child node is created for an unexplored move.
 
-These steps are repeated for a fixed number of iterations. The move with the highest number of visits is selected as the best move.
+### Simulation
 
-## 6. System Architecture
+A random game is played from the selected node until
+the game reaches a terminal state.
 
-The system consists of the following components:
+### Backpropagation
 
-User
-↓
-Tic-Tac-Toe Board
-↓
-MCTS Agent
-↓
-Selection
-↓
-Expansion
-↓
-Simulation
-↓
-Backpropagation
-↓
-Best Move
-↓
-Game Result
+The simulation result is propagated back through the tree
+to update visit and win statistics.
 
-## 7. Implementation
+## 4. UCT Formula
 
-The project is implemented in Python using the following components:
+UCT =
 
-- Tic-Tac-Toe board representation
-- Winning condition checking
-- Available move generation
-- MCTS Node
-- Selection using UCT
-- Expansion of unexplored moves
-- Random simulation
-- Backpropagation of results
-- Minimax algorithm for comparison
-- Game interface for the user
+Win Rate + C × sqrt(log(parent visits) / child visits)
 
-## 8. Results
+The formula balances exploitation and exploration.
 
-The MCTS agent successfully selects moves by using repeated random simulations. It can play Tic-Tac-Toe without generating the complete game tree.
+## 5. Minimax Comparison
 
-MCTS and Minimax are compared based on their method of selecting moves. MCTS uses simulations and exploration, while Minimax systematically evaluates possible game states.
+The project compares MCTS with Minimax.
 
-## 9. Screenshots
+MCTS uses random simulations to estimate promising moves,
+while Minimax searches the game tree using game outcomes.
 
-Add screenshots of:
+## 6. How to Run
 
-- Tic-Tac-Toe game board
-- MCTS agent selecting a move
-- Game result
-- MCTS vs Minimax comparison
+Clone the repository.
 
-## 10. How to Run
+Install dependencies:
 
-1. Install Python.
-2. Download or clone this repository.
-3. Open the project folder.
-4. Run the following command:
+pip install -r requirements.txt
 
-```bash
-python main.py
+Run the comparison:
+
+python src/compare.py
+
+Run tests:
+
+pytest
+
+## 7. Sample Output
+
+MCTS vs Minimax
+----------------
+Total Games : 20
+MCTS Wins   : ...
+Minimax Wins: ...
+Draws       : ...
+
+The exact result may vary because MCTS uses random
+simulations.
+
+## 8. Complexity
+
+MCTS complexity depends mainly on the number of simulations.
+
+If N simulations are performed and each simulation takes
+up to D moves, the approximate simulation work is O(ND).
+
+Minimax explores possible game states and can grow
+exponentially with search depth.
+
+## 9. Applications
+
+- Game-playing AI
+- Decision-making systems
+- Search problems
+- Robotics planning
+- Strategy optimization
+
+## 10. Reflection
+
+The main challenge was implementing the four stages of MCTS
+and maintaining statistics for each node.
+
+The project demonstrates how random rollouts can guide the
+search without constructing the complete game tree.
+
+## 11. Honesty Note
+
+AI tools and online references were consulted for learning
+and implementation guidance. The submitted code was tested
+and understood by the student.
+
+## 12. References
+
+1. Sutton, R. S. and Barto, A. G., Reinforcement Learning:
+   An Introduction.
+
+2. Browne, C. B. et al., A Survey of Monte Carlo Tree Search
+   Methods, IEEE Transactions on Computational Intelligence
+   and AI in Games.
+
+3. Russell, S. and Norvig, P., Artificial Intelligence:
+   A Modern Approach.
