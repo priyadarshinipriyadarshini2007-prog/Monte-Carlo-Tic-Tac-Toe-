@@ -1,0 +1,351 @@
+# MONTE CARLO TIC-TAC-TOE USING MONTE CARLO TREE SEARCH
+
+## 1. Problem Formulation
+
+### Problem Statement
+
+The objective of this project is to develop an intelligent Tic-Tac-Toe player using **Monte Carlo Tree Search (MCTS)**. The system selects a suitable move by exploring possible game states through repeated simulations.
+
+The project also compares the performance of **MCTS** with the **Minimax** algorithm.
+
+### State
+
+A state represents the current Tic-Tac-Toe board.
+
+The board contains 9 positions, and each position can contain:
+
+* X
+* O
+* Empty
+
+Example:
+
+```text
+ X | O | X
+---+---+---
+   | X | O
+---+---+---
+ O |   |
+```
+
+### Actions
+
+An action is placing the current player's symbol in any available empty position.
+
+For example:
+
+```text
+Available positions = 3, 7, 8
+```
+
+The player can choose any one of these positions.
+
+### Goal Test
+
+The game reaches a goal state when:
+
+1. X gets three symbols in a row, column, or diagonal.
+2. O gets three symbols in a row, column, or diagonal.
+3. All positions are filled and there is no winner, resulting in a draw.
+
+### Cost / Evaluation
+
+Tic-Tac-Toe does not have a movement cost like a path-finding problem. Instead, MCTS evaluates moves using simulation results.
+
+The result is considered as:
+
+* Win = 1
+* Draw = 0.5
+* Loss = 0
+
+The objective of MCTS is to select the move with the best estimated performance.
+
+---
+
+# 2. Approach
+
+## Monte Carlo Tree Search
+
+The algorithm selected for this project is **Monte Carlo Tree Search (MCTS)** because it can make decisions by performing repeated simulations instead of searching the complete game tree.
+
+MCTS consists of four main stages:
+
+```text
+             Current State
+                  |
+                  v
+             SELECTION
+                  |
+                  v
+             EXPANSION
+                  |
+                  v
+             SIMULATION
+                  |
+                  v
+          BACKPROPAGATION
+                  |
+                  v
+             Best Move
+```
+
+### 2.1 Selection
+
+Starting from the root node, MCTS selects child nodes that have a good balance between exploration and exploitation.
+
+The project uses the **UCT (Upper Confidence Bound for Trees)** formula:
+
+```text
+UCT = (Wins / Visits)
+      + C × √(ln(Parent Visits) / Child Visits)
+```
+
+where:
+
+* Wins = number of successful simulations
+* Visits = number of times the node was visited
+* C = exploration constant
+* Parent Visits = visits of the parent node
+
+### 2.2 Expansion
+
+When an unexplored move is found, a new child node is created for that move.
+
+For example:
+
+```text
+Current Board
+     |
+     +-- Move 1
+     +-- Move 2
+     +-- Move 3
+```
+
+The unexplored move is added as a new node in the search tree.
+
+### 2.3 Simulation
+
+After expansion, a game is played from the new state.
+
+Available moves are selected randomly until:
+
+* X wins,
+* O wins, or
+* the game ends in a draw.
+
+The result of this simulation is used to estimate the quality of the selected move.
+
+### 2.4 Backpropagation
+
+The result of the simulation is propagated from the selected node back to the root.
+
+The visit count and win statistics of the nodes are updated.
+
+For example:
+
+```text
+Simulation Result
+       |
+       v
+    Child Node
+       |
+       v
+   Parent Node
+       |
+       v
+    Root Node
+```
+
+After many simulations, the move with the highest number of visits is selected.
+
+## Why MCTS?
+
+MCTS was selected because:
+
+* It does not require the complete game tree to be constructed.
+* It uses simulations to evaluate moves.
+* It balances exploration and exploitation.
+* It is suitable for game-playing problems.
+* Its performance can be improved by increasing the number of simulations.
+
+## Minimax Comparison
+
+Minimax is used as the comparison algorithm.
+
+Minimax evaluates possible game states by assuming that both players make optimal decisions.
+
+In this project:
+
+* MCTS uses repeated simulations.
+* Minimax searches game states systematically.
+* The two methods are compared using game results and runtime.
+
+---
+
+# 3. Complexity
+
+## MCTS Time Complexity
+
+Let:
+
+* N = number of MCTS simulations
+* D = maximum depth of a simulation
+
+The approximate simulation time is:
+
+```text
+O(N × D)
+```
+
+Since Tic-Tac-Toe has a small maximum game depth, MCTS can perform many simulations efficiently.
+
+The practical running time also depends on:
+
+* Number of iterations
+* Number of available moves
+* Computer processing speed
+
+## MCTS Space Complexity
+
+MCTS stores nodes created during the search.
+
+If N nodes are created, the approximate space requirement is:
+
+```text
+O(N)
+```
+
+More iterations generally create a larger search tree.
+
+## Minimax Complexity
+
+Minimax can have exponential time complexity with respect to search depth:
+
+```text
+O(b^d)
+```
+
+where:
+
+* b = branching factor
+* d = search depth
+
+For Tic-Tac-Toe, the search space is small enough that Minimax can solve the game efficiently.
+
+## Practical Limits
+
+The main practical limitation of MCTS is that increasing the number of simulations increases both computation time and memory usage.
+
+For this project, a fixed number of simulations is used for each MCTS move. A larger number of iterations generally provides more reliable move estimates but requires more runtime.
+
+---
+
+# 4. Results
+
+The MCTS agent was tested against a Minimax agent.
+
+The comparison should be performed using the actual results produced by the program.
+
+## Experimental Setup
+
+```text
+Algorithm 1 : MCTS
+Algorithm 2 : Minimax
+Number of Games : 20
+MCTS Iterations per Move : 500
+```
+
+## Output Table
+
+After running the program, record the actual values:
+
+| Metric         |               MCTS |            Minimax |
+| -------------- | -----------------: | -----------------: |
+| Games Played   |                 20 |                 20 |
+| Wins           |     [actual value] |     [actual value] |
+| Losses         |     [actual value] |     [actual value] |
+| Draws          |     [actual value] |     [actual value] |
+| Win Rate       |    [actual value]% |    [actual value]% |
+| Runtime        | [actual value] sec | [actual value] sec |
+| Nodes Expanded |     [actual value] |     [actual value] |
+
+### Win Rate
+
+The win rate can be calculated using:
+
+```text
+Win Rate = (Number of Wins / Total Games) × 100
+```
+
+For example, if MCTS wins 8 out of 20 games:
+
+```text
+Win Rate = (8 / 20) × 100
+         = 40%
+```
+
+Use the **actual output from your program**, rather than assuming these example values.
+
+## Sample Program Output
+
+```text
+MCTS vs Minimax
+----------------
+Total Games : 20
+MCTS Wins   : [actual result]
+Minimax Wins: [actual result]
+Draws       : [actual result]
+```
+
+## Screenshots
+
+The report should include screenshots showing:
+
+1. GitHub repository structure.
+2. MCTS program execution.
+3. MCTS vs Minimax output.
+4. Test execution using `pytest`.
+
+The screenshots provide evidence that the implementation was executed and tested.
+
+---
+
+# 5. Reflection
+
+## What Was Difficult?
+
+The main difficulty was understanding and implementing the four stages of MCTS correctly. In particular, maintaining the visit count and win statistics during backpropagation required careful implementation.
+
+Another challenge was comparing MCTS with Minimax because the two algorithms use different approaches to selecting moves.
+
+## What I Learned
+
+Through this project, I learned:
+
+* How MCTS works.
+* How search trees can be used in game-playing AI.
+* The difference between exploration and exploitation.
+* How random simulations can estimate the quality of a move.
+* How MCTS differs from Minimax.
+* How to test and compare AI algorithms.
+
+## What I Would Improve
+
+In the future, the project can be improved by:
+
+* Increasing the number of MCTS simulations.
+* Adding a graphical user interface.
+* Testing different UCT exploration constants.
+* Running more games for a more reliable comparison.
+* Recording detailed runtime and node-expansion statistics.
+* Adding different difficulty levels for the MCTS player.
+
+## Conclusion
+
+The project successfully demonstrates the use of **Monte Carlo Tree Search for Tic-Tac-Toe**. The four important stages—**Selection, Expansion, Simulation and Backpropagation**—are implemented to select promising moves.
+
+The comparison with Minimax helps demonstrate the difference between simulation-based search and systematic game-tree search. The experiment also shows how the number of MCTS simulations can affect the quality and runtime of the algorithm.
+
+## Honesty Note
+
+AI tools and online references were used for learning and implementation guidance, and the final code was tested and understood by the student.
