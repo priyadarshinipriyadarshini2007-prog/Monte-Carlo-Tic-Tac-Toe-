@@ -62,4 +62,37 @@ Game Result
 The project is implemented in Python using the following components:
 
 - Tic-Tac-Toe board representation
-- Winning condition
+- Winning condition checking
+- Available move generation
+- MCTS Node
+- Selection using UCT
+- Expansion of unexplored moves
+- Random simulation
+- Backpropagation of results
+- Minimax algorithm for comparison
+- Game interface for the user
+
+## 8. Results
+
+The MCTS agent successfully selects moves by using repeated random simulations. It can play Tic-Tac-Toe without generating the complete game tree.
+
+MCTS and Minimax are compared based on their method of selecting moves. MCTS uses simulations and exploration, while Minimax systematically evaluates possible game states.
+
+## 9. Screenshots
+
+Add screenshots of:
+
+- Tic-Tac-Toe game board
+- MCTS agent selecting a move
+- Game result
+- MCTS vs Minimax comparison
+
+## 10. How to Run
+
+1. Install Python.
+2. Download or clone this repository.
+3. Open the project folder.
+4. Run the following command:
+
+```bash
+python main.py
